@@ -1,6 +1,29 @@
 crear proyecto
 ionic start nameApp
 
+
+subir servidor
+ionic serve
+
+crear pagina nueva 
+ionic g page ruta/nombrePagina
+ionic g page pages/auth
+
+
+crear un modulo
+ionic g module nombreModulo
+ionic g module shared
+
+crear componentes
+ionic g c ruta/nombreComponente
+ionic g c shared/components/updateEmployee
+
+
+
+crear servicios nuevos
+ionic g service ruta/nombreServicio
+ionic g service services/firebase
+
 se selecciona con angular y posterior ngModule
 
 - Go to your new project: cd ./empleados
