@@ -1,13 +1,19 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>signUp</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header title="Registrarse"></app-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">signUp</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="d-flex-center">
+
+    <form action="" class="auth-form">
+      <app-logo></app-logo>
+      <app-login-input></app-login-input>
+
+      <div class="validators"></div>
+
+
+      <ion-button class="submit" expand="block" fill="outline" mode="ios">
+        Registrarse
+      </ion-button>
+    </form>
+
+  </div>
 </ion-content>
