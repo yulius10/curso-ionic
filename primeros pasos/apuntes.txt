@@ -28,6 +28,10 @@ insetalar firebase
 npm install firebase
 npm i firebase @angular/fire
 
+
+jwt para tema de los tokens que genera firebase
+
+
 se selecciona con angular y posterior ngModule
 
 - Go to your new project: cd ./empleados
