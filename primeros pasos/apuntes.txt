@@ -24,6 +24,10 @@ crear servicios nuevos
 ionic g service ruta/nombreServicio
 ionic g service services/firebase
 
+insetalar firebase
+npm install firebase
+npm i firebase @angular/fire
+
 se selecciona con angular y posterior ngModule
 
 - Go to your new project: cd ./empleados
