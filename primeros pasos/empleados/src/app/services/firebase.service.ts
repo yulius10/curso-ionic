@@ -21,5 +21,15 @@ export class FirebaseService {
     return signInWithEmailAndPassword(getAuth(), user.email, user.password);
   }
 
+  signUp(user: User){
+    return createUserWithEmailAndPassword(getAuth(), user.email, user.password);
+  }
   
+  updateUser(displayName: any ){
+    return updateProfile(getAuth().currentUser,{displayName})
+  }
+
+  setDocument(path:any, data:any){
+    return setDoc(doc(getFirestore(),path),data);
+  }
 }
