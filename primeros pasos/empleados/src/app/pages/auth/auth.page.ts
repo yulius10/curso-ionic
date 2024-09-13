@@ -34,20 +34,57 @@ export class AuthPage implements OnInit {
 
       this.firebaseService.signIn(this.form.value as User)
         .then(resp => {
-          console.log('__________',resp)
-          this.utilsService.routerLink('/main/home')
-          this.utilsService.presentToast({
-            'message':'Bienvenido',
-            'duration':1500,
-            'color': 'primary',
-            'position': 'bottom',
-            'icon': 'person-circle-outline'
-          })
+          this.getUserInfo(resp.user.uid)
         }).catch(error => {
           console.log(error)
           this.utilsService.presentToast({
             //'message': error.message,
             'message': 'Error de credenciales',
+            'duration':2500,
+            'color': 'danger',
+            'position': 'bottom',
+            'icon': 'alert-circle-outline'
+          })
+        }).finally(() => {
+          loading.dismiss();
+        });;
+      console.log(this.form.value);
+    }
+    else{
+      console.log('Ocurrio un problema');
+    }
+  }
+
+  async getUserInfo(uid: string){
+    if(this.form.valid){
+      const loading = await this.utilsService.loading();
+
+      await loading.present()
+
+      let path = `users/${uid}` 
+
+      this.firebaseService.getDocument(path)
+        .then((user: User) => {
+          
+          this.utilsService.saveLocalStorage('user',user)
+          this.utilsService.routerLink('/main/home');
+          
+          this.form.reset();
+          
+          this.utilsService.presentToast({
+            //'message': error.message,
+            'message': `Bienvenido ${user.name}`,
+            'duration':1500,
+            'color': 'primary',
+            'position': 'bottom',
+            'icon': 'person-circle-outline'
+          })
+
+        }).catch(error => {
+          console.log(error)
+          this.utilsService.presentToast({
+            'message': error.message,
+            //'message': 'Erro',
             'duration':2500,
             'color': 'danger',
             'position': 'bottom',

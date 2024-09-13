@@ -32,4 +32,9 @@ export class FirebaseService {
   setDocument(path:any, data:any){
     return setDoc(doc(getFirestore(),path),data);
   }
+
+  async getDocument(path:any){
+    return (await getDoc(doc(getFirestore(),path))).data();
+  }
+
 }
