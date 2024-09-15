@@ -1,5 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user.model';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-main',
@@ -8,8 +11,10 @@ import { Router } from '@angular/router';
 })
 export class MainPage implements OnInit {
 
-  router = inject(Router)
-  currentPath: string = ''
+  router = inject(Router);
+  firebaseService = inject(FirebaseService);
+  utilsService = inject(UtilsService);
+  currentPath: string = '';
 
   pages = [
     { title: 'Inicio',url: '/main/home',icon:'home-outline' },
@@ -24,4 +29,11 @@ export class MainPage implements OnInit {
     console.log(this.pages)
   }
 
+  signOut(){
+    this.firebaseService.singOut();
+  }
+
+  user(): User {
+    return this.utilsService.getLocalStorage('user');
+  }
 }
