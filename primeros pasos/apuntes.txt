@@ -28,6 +28,10 @@ insetalar firebase
 npm install firebase
 npm i firebase @angular/fire
 
+instalar la camara en el proyecto
+https://capacitorjs.com/docs/apis/camera
+
+
 
 jwt para tema de los tokens que genera firebase
 

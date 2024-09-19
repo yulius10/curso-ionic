@@ -92,7 +92,7 @@ export class AuthPage implements OnInit {
           })
         }).finally(() => {
           loading.dismiss();
-        });;
+        });
       console.log(this.form.value);
     }
     else{
