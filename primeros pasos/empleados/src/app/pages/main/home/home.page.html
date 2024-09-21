@@ -36,9 +36,9 @@
       </ion-item>
       <ion-item-options>
         <ion-item-option>
-          <ion-icon class="option-btn" name="create-outline"></ion-icon>
+          <ion-icon class="option-btn" name="create-outline" (click) = "addUpdateEmployees(empleado)"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="danger">
+        <ion-item-option color="danger" (click) = "confirmDeleteEmployee(empleado)">
           <ion-icon class="option-btn" name="trash-outline"></ion-icon>
         </ion-item-option>
       </ion-item-options>

@@ -32,6 +32,7 @@ export class HomePage implements OnInit {
   }
 
   async addUpdateEmployees(employee?: Employees){
+    console.log(employee)
     let modal = await this.utilsService.getModal({
       component: UpdateEmployeeComponent,
       cssClass: 'add-update-modal',
@@ -73,5 +74,68 @@ export class HomePage implements OnInit {
       this.getEmployee();
       event.target.complete();
     },1000);
+  }
+
+  async deleteEmployee(employee: Employees){
+    console.log('Listo para eliminar');
+    let path = `users/${this.user().uid}/empleados/${employee.id}`;
+
+    const loading = await this.utilsService.loading();
+    await loading.present();
+
+    let imgPath = await this.firebaseService.getFilePath(employee.img);
+    await this.firebaseService.deleteFile(imgPath);
+
+
+
+    this.firebaseService.deleteDocument(path)
+      .then( async resp => {
+        
+        //actualizar lista
+        this.employees = this.employees.filter(e => e.id !== employee.id);
+
+        this.utilsService.dismissModal({success: true});
+
+        this.utilsService.presentToast({
+          //'message': error.message,
+          'message': `Empleado eliminado exitósamente`,
+          'duration':1500,
+          'color': 'primary',
+          'position': 'bottom',
+          'icon': 'checkmark-circle-outline'
+        })
+
+      }).catch(error => {
+        console.log(error)
+        this.utilsService.presentToast({
+          'message': error.message,
+          //'message': 'Erro',
+          'duration':2500,
+          'color': 'danger',
+          'position': 'bottom',
+          'icon': 'alert-circle-outline'
+        })
+      }).finally(() => {
+        loading.dismiss();
+      });
+  }
+
+  async confirmDeleteEmployee(employee: Employees){
+    this.utilsService.presentAlert({
+      header: 'Eliminar Empleado',
+      message: '¿Desea eliminar el empleado?',
+      mode: 'ios',
+      buttons:[
+        {
+          text: 'Cancelar'
+        },
+        {
+          text: 'Si, Eliminar',
+          handler: () => {
+            this.deleteEmployee(employee);
+          }
+        }
+      ]
+    });
   }
 }

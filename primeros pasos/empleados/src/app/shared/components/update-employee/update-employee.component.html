@@ -1,4 +1,4 @@
-<app-header [isModal]="true" title="Agregar">
+<app-header [isModal]="true" [title]="employee ? 'Actualizar Empleado' : 'Agregar Empleado'" >
 </app-header>
 
 <ion-content>
@@ -52,7 +52,7 @@
 
     
     <ion-button class="submit" type="submit" mode="ios" [disabled]="form.invalid">
-      Agregar Empleado
+      {{employee ? 'Actualizar Empleado' : 'Agregar Empleado'}}
       <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
     </ion-button>
 
