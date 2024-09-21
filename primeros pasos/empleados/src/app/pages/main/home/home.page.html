@@ -1,31 +1,36 @@
 <app-header [showMenu]="true" title="Inicio"></app-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item-sliding class="product-item">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="!loading">
+    <ion-item-sliding class="product-item" *ngFor="let empleado of employees">
       <ion-item>
         <ion-avatar slot="start">
-          <img src="../../../../assets/androide.png" alt="" size="small">
+          <img [src]="empleado.img" [alt]="empleado.name" size="small">
         </ion-avatar>
         <ion-label>
           <div class="name">
-            Felipe Gómez
+            {{ empleado.name }}
           </div>
           <div class="data">
             <strong>
               Salario:
             </strong>
-            {{ '2000' | currency: 'COP'}}
+            {{ empleado.salario| currency: 'COP'}}
             <br>
             <strong>
               Cargo:
             </strong>
-            {{ 'Director General' }}
+            {{ empleado.cargo }}
             <br>
             <strong>
               Plantel:
             </strong>
-            {{ 'Bogota' }}
+            {{ empleado.plantel }}
           </div>
         </ion-label>
       </ion-item>
@@ -39,6 +44,28 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+  <ion-list *ngIf="loading">
+    <ion-item-sliding class="product-item" *ngFor="let empleado of [1,1,1,1,1,1,1]">
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated style="width: 100%; height: 100%;"></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <div>
+            <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 30%;"></ion-skeleton-text>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+
+  <div class="empty" *ngIf="!loading && !employees.length">
+    <ion-icon name="diamond-outline"></ion-icon>
+    <h3>No hay empleado disponibles</h3>
+  </div>
+
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click) = "addUpdateEmployees()">
       <ion-icon name="add">

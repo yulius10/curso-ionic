@@ -26,7 +26,7 @@
     </div>
 
     <app-login-input autoComplete="salario" type="number" label="Salario"
-      [control]="form.controls.salario">
+      [control]="form.controls.salario" (ionInput) = "setNumberInput()">
     </app-login-input>
 
     <div class="validators" *ngIf="form.controls.salario.errors && form.controls.salario.touched">

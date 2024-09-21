@@ -20,29 +20,23 @@ export class UpdateEmployeeComponent  implements OnInit {
     id: new FormControl(''),
     name: new FormControl('',[Validators.required]),
     img: new FormControl('',[Validators.required]),
-    salario: new FormControl('',[Validators.required,Validators.min(0)]),
+    salario: new FormControl(null,[Validators.required,Validators.min(0)]),
     cargo: new FormControl('',[Validators.required]),
     plantel: new FormControl('',[Validators.required])
   });
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.user = this.utilsService.getLocalStorage('user');
+  }
+
+  setNumberInput(){
+    let { salario } = this.form.controls;
+    if(salario.value) salario.setValue(parseFloat(salario.value));
+  }
 
   async submit(){
     console.log(this.form.value);
     this.createEmployee();
-    /*
-    if(this.form.valid){
-      const loading = await this.utilsService.loading();
-
-      loading.present()
-
-
-
-      console.log(this.form.value);
-    }
-    else{
-      console.log('Ocurrio un problema');
-    }*/
   }
 
   async getUserInfo(uid: string){
@@ -95,6 +89,14 @@ export class UpdateEmployeeComponent  implements OnInit {
 
     const loading = await this.utilsService.loading();
     await loading.present();
+
+    let dataUrl = this.form.value.img;
+    let imgPath = `${this.user.uid}/${Date.now()}`
+    let imgUrl = await this.firebaseService.updateImg(imgPath,dataUrl);
+    
+    this.form.controls.img.setValue(imgUrl);
+
+    delete this.form.value.id;
 
     this.firebaseService.addDocument(path,this.form.value)
       .then( async resp => {
